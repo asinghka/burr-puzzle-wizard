@@ -316,8 +316,6 @@ private:
         if (dim == -1 || sign == 0)
             throw std::runtime_error("Incompatible direction vector.");
         
-        new_positions = piece_positions;
-        
         for (size_t i = 0; i < _num_pieces; i++) {
             if (!free_pieces[i]) {
                 graph[i] = _get_collisions(i, direction, node);

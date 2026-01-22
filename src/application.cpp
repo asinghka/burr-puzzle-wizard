@@ -1,7 +1,6 @@
 #include <stdexcept>
 #include <format>
 #include <vector>
-#include <fmt/os.h>
 #include <fmt/core.h>
 #include <glm/glm.hpp>
 #include <imgui/imgui.h>
@@ -152,29 +151,29 @@ void Application::_swap_buffers() const noexcept
 void Application::_process_key_input(bool& running) noexcept
 {
     // Process keyboard input
-    const Uint8* keystate = SDL_GetKeyboardState(nullptr);
+    const Uint8* key_state = SDL_GetKeyboardState(nullptr);
     
-    if (keystate[SDL_SCANCODE_W])
+    if (key_state[SDL_SCANCODE_W])
         _camera.process_keyboard(CameraMovement::Forward, _delta_time);
-    if (keystate[SDL_SCANCODE_S])
+    if (key_state[SDL_SCANCODE_S])
         _camera.process_keyboard(CameraMovement::Backward, _delta_time);
-    if (keystate[SDL_SCANCODE_A])
+    if (key_state[SDL_SCANCODE_A])
         _camera.process_keyboard(CameraMovement::Left, _delta_time);
-    if (keystate[SDL_SCANCODE_D])
+    if (key_state[SDL_SCANCODE_D])
         _camera.process_keyboard(CameraMovement::Right, _delta_time);
-    if (keystate[SDL_SCANCODE_Q] | keystate[SDL_SCANCODE_SPACE])
+    if (key_state[SDL_SCANCODE_Q] | key_state[SDL_SCANCODE_SPACE])
         _camera.process_keyboard(CameraMovement::Up, _delta_time);
-    if (keystate[SDL_SCANCODE_E] | keystate[SDL_SCANCODE_LCTRL])
+    if (key_state[SDL_SCANCODE_E] | key_state[SDL_SCANCODE_LCTRL])
         _camera.process_keyboard(CameraMovement::Down, _delta_time);
-    if (keystate[SDL_SCANCODE_ESCAPE])
+    if (key_state[SDL_SCANCODE_ESCAPE])
         running = false;
 }
 
 void Application::_process_mouse_motion_input(const SDL_Event& e) noexcept
 {
-    const Uint32 mousestate = SDL_GetMouseState(nullptr, nullptr);
+    const Uint32 mouse_state = SDL_GetMouseState(nullptr, nullptr);
     
-    if (mousestate & SDL_BUTTON_RMASK) {
+    if (mouse_state & SDL_BUTTON_RMASK) {
         SDL_ShowCursor(SDL_DISABLE);
         SDL_SetWindowGrab(_window, SDL_TRUE);
         SDL_SetRelativeMouseMode(SDL_TRUE);
