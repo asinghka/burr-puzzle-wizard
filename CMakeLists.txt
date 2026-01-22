@@ -39,3 +39,10 @@ add_executable(burr_puzzle_wizard
 target_compile_definitions(burr_puzzle_wizard PRIVATE GLEW_STATIC)
 
 target_link_libraries(burr_puzzle_wizard ${BURR_PUZZLE_WIZARD_LIBS})
+
+if (WIN32)
+	add_custom_command(TARGET burr_puzzle_wizard POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy_if_different
+			"${BURR_PUZZLE_WIZARD_LIBRARY_DIR}/SDL2.dll"
+			$<TARGET_FILE_DIR:burr_puzzle_wizard>)
+endif()
