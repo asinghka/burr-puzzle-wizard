@@ -1,15 +1,13 @@
 #include "application.h"
+#include "puzzles/puzzle_18.h"
 
-const auto file_path = std::filesystem::path("res/puzzles/Puzzle18.txt");
-
+// Function signature and explicit return value is needed as main() is remapped to SDL_main
 int main(int argc, char** argv) {
-    
-    auto app = new Application();
 
-    app->init_wizard(file_path);
-    app->run();
-    
-    delete app;
+    Application app;
+
+    app.init_wizard(puzzle_18);
+    app.run();
 
     return 0;
 }

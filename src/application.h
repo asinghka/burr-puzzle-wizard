@@ -13,7 +13,7 @@ public:
     ~Application() noexcept;
     
     void run() noexcept;
-    void init_wizard(const std::filesystem::path& filepath) noexcept;
+    void init_wizard(const char* puzzle) noexcept;
     
 private:
     void _create_window();
@@ -33,8 +33,7 @@ private:
     void _update_delta_time() noexcept;
     
 private:
-    // TODO: use ptr instead?
-    // TODO: templated class nested in non-templated class?
+    // TODO: replace std::bitset with boost::dynamic_bitset to allow runtime N (performance difference?)
     BurrPuzzleWizard<48> _wizard;
     
     uint32_t _width;

@@ -265,9 +265,9 @@ void Application::run() noexcept
     }
 }
 
-void Application::init_wizard(const std::filesystem::path& filepath) noexcept
+void Application::init_wizard(const char* puzzle) noexcept
 {
-    _wizard.read_puzzle_from_file(filepath);
+    _wizard.read_puzzle_from_file(puzzle);
     _wizard.init_field();
     _wizard.init_start_node();
 }

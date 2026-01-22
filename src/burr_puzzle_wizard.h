@@ -59,46 +59,43 @@ class BurrPuzzleWizard final
 public:
     BurrPuzzleWizard() = default;
 
-    void read_puzzle_from_file(const std::filesystem::path& path) noexcept
+    void read_puzzle_from_file(const char* puzzle) noexcept
     {
         std::bitset<N*N*N> temp_piece;
         std::vector<Piece<N>> temp_pieces;
         std::vector<utils::int3> temp_initial_positions;
 
-        std::ifstream stream(path);
+        std::istringstream  stream(puzzle);
 
-        if (stream.is_open()) {
-            std::string line;
+        std::string line;
+        while (getline(stream, line)) {
 
-            while (getline(stream, line)) {
+            // line[0] != '\r' for macOS
+            if (!line.empty() && line[0] != '\r') {
+                std::vector<int> coordinates;
 
-                // line[0] != '\r' for macOS
-                if (!line.empty() && line[0] != '\r') {
-                    std::vector<int> coordinates;
+                std::istringstream iss(line);
+                std::string word;
 
-                    std::istringstream iss(line);
-                    std::string word;
-                    
-                    if (line.at(0) == '#') {
-                        while (iss >> word) {
-                            if (word != "#") {
-                                coordinates.push_back(stoi(word));
-                            }
-                        }
-
-                        temp_initial_positions.push_back({coordinates[0], coordinates[1], coordinates[2]});
-                    } else {
-                        while (iss >> word) {
+                if (line.at(0) == '#') {
+                    while (iss >> word) {
+                        if (word != "#") {
                             coordinates.push_back(stoi(word));
                         }
-
-                        int index = utils::transform_index_3d_to_1d(coordinates[0], coordinates[1], coordinates[2], N);
-                        temp_piece[index] = 1;
                     }
+
+                    temp_initial_positions.push_back({coordinates[0], coordinates[1], coordinates[2]});
                 } else {
-                    temp_pieces.push_back(temp_piece);
-                    temp_piece.reset();
+                    while (iss >> word) {
+                        coordinates.push_back(stoi(word));
+                    }
+
+                    int index = utils::transform_index_3d_to_1d(coordinates[0], coordinates[1], coordinates[2], N);
+                    temp_piece[index] = 1;
                 }
+            } else {
+                temp_pieces.push_back(temp_piece);
+                temp_piece.reset();
             }
         }
 
@@ -106,8 +103,6 @@ public:
         _puzzle = temp_pieces;
         _initial_positions = temp_initial_positions;
         _positions = temp_initial_positions;
-
-        stream.close();
     }
 
     void init_field() noexcept
