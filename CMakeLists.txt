@@ -15,7 +15,7 @@ if(WIN32)
 			${BURR_PUZZLE_WIZARD_LIBRARY_DIR}/SDL2main.lib
 			opengl32.lib)
 	include_directories(${CMAKE_SOURCE_DIR}/include_windows)
-elseif(APPLE)
+elseif(UNIX)
 	find_package(OpenGL REQUIRED)
 	find_package(SDL2 REQUIRED)
 	find_package(GLEW REQUIRED)
@@ -38,7 +38,9 @@ add_executable(burr_puzzle_wizard
 		${BURR_PUZZLE_WIZARD_HPP_FILES}
 		${IMGUI_CPP_FILES})
 
-target_compile_definitions(burr_puzzle_wizard PRIVATE GLEW_STATIC)
+if(WIN32)
+	target_compile_definitions(burr_puzzle_wizard PRIVATE GLEW_STATIC)
+endif()
 
 target_link_libraries(burr_puzzle_wizard ${BURR_PUZZLE_WIZARD_LIBS})
 
