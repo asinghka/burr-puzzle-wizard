@@ -38,6 +38,8 @@ add_executable(burr_puzzle_wizard
 		${BURR_PUZZLE_WIZARD_HPP_FILES}
 		${IMGUI_CPP_FILES})
 
+target_compile_definitions(burr_puzzle_wizard PRIVATE FMT_CONSTEVAL=)
+
 if(WIN32)
 	target_compile_definitions(burr_puzzle_wizard PRIVATE GLEW_STATIC)
 endif()

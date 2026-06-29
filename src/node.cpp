@@ -1,4 +1,5 @@
 #include "node.h"
+#include <algorithm>
 #include <iostream>
 
 Node::Node(std::vector<utils::int3> positions, int dim) noexcept
